@@ -14,9 +14,9 @@ Be sure to follow the instructions <a href="https://github.com/barryvdh/laravel-
 so as to enable you send Cross-Origin Resource Sharing. otherwise you'll have errors with POST, UPDATE AND DELETE REQUEST!
 <p align="center">
 
-  <img src="/screenshot/backend_1" width="350"/>
-  <img src="/screenshot/backend_2" width="350"/>
-  <img src="/screenshot/backend_3" width="350"/>
-  <img src="/screenshot/frontend" width="350"/>
+  <img src="screenshot/backend_1" width="350"/>
+  <img src="screenshot/backend_2" width="350"/>
+  <img src="screenshot/backend_3" width="350"/>
+  <img src="screenshot/frontend" width="350"/>
 
 </p>
