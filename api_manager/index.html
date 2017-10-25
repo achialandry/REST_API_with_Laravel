@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Api_Manager</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">RESTful Api Manager</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Doesn't work!</button>
+        </form>
+      </div>
+    </nav> <br><br><br><br><br>
+
+    <main role="main" class="container">
+      <h1 class="text-info">Add Item via REST API</h1>
+      <!--FOR for adding/editing data to database via RESTful API-->
+      <form id="item-form" >
+        <div class="form-group">
+          <label>Text</label>
+          <input type="text" id="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Body</label>
+          <textarea id="body" class="form-control"></textarea>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit">
+      </form><br><hr><br>
+      <!--ul for fetching data through RESTful API-->
+      <ul id="items" class="list-group">
+
+      </ul>
+
+    </main><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script> -->
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+
+    <script>
+      $(document).ready(function(){
+        getItems();
+
+        //Submit event for form with id= item-form
+        $('#item-form').on('submit', function(e){
+          //prevent form from submitting to a file
+          e.preventDefault();
+
+          let text = $('#text').val();
+          let body = $('#body').val();
+
+
+          addItem(text, body);
+        });
+
+        // Delete event
+        $('body').on('click', '.delete_text', function(e){
+            e.preventDefault();
+
+            let id = $(this).data('id');
+            deleteItem(id);
+        });
+
+
+        //Delete item to db using the api
+        function deleteItem(id){
+          $.ajax({
+            method:'POST',
+            url:'http://itemsapi.dev/api/items/'+id,
+            data: {_method:'DELETE'}
+          }).done(function(item){
+            alert('Item Discarded');
+            location.reload();
+          });
+        }
+
+        //Insert items to db using the api
+        function addItem(text, body){
+          $.ajax({
+            method:'POST',
+            url:'http://itemsapi.dev/api/items',
+            data: {text: text, body:body}
+          }).done(function(item){
+            alert('Item No. '+item.id+'  added');
+            location.reload();
+          });
+        }
+
+        //Get Items or fetching data from REST API
+        function getItems(){
+          $.ajax({
+            url:'http://itemsapi.dev/api/items'
+          }).done(function(items){
+            let output =''
+            $.each(items, function(key,item){
+              output +=`
+              <li class="list-group-item">
+                <strong class="text-primary">${item.text}: </strong> <span class="text-secondary">${item.body}</span><a href="#" class="delete_text text-danger" data-id="${item.id}"> Discard</a>
+              </li>
+              `;
+            });
+            $('#items').append(output);
+          });
+        }
+      });
+
+    </script>
+
+  </body>
+</html>

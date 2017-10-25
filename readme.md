@@ -12,11 +12,10 @@ have server name of itemsapiv.dev
 
 Be sure to follow the instructions <a href="https://github.com/barryvdh/laravel-cors">here</a>
 so as to enable you send Cross-Origin Resource Sharing. otherwise you'll have errors with POST, UPDATE AND DELETE REQUEST!
-
 <p align="center">
-![Backend picture](/screenshot/backend_1)
-![Backend picture](/screenshot/backend_2)
-![Backend picture](/screenshot/backend_3)
-![frontend](/screenshot/frontend)
+![Backend](screenshot/backend_1)
+![Backend](screenshot/backend_2)
+![Backend](screenshot/backend_3)
+![frontend](screenshot/frontend)
 
 </p>
